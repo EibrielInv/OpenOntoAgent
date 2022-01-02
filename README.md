@@ -1,2 +1,5 @@
 # OpenOntoAgent
-Experimenting with the OntoAgent architecture released as Open Source code
+Experimental and incomplete OntoAgent architecture architecture. Released as Open Source code.
+
+
+Inspired by the book [Linguistics for the Age of AI](https://mitpress.mit.edu/books/linguistics-age-ai) by Marjorie McShane and Sergei Nirenburg, and aditional literature.
