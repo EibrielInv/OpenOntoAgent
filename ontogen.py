@@ -78,7 +78,9 @@ words.append({
     "subject_id": tmr_extended["TMR"][root]["lexical_sense_filled"]["SYN-STRUC"]["SUBJECT"]["ROOT"],
 
     "directobject_word": tmr_extended["TMR"][tmr_extended["TMR"][root]["lexical_sense_filled"]["SYN-STRUC"]["DIRECTOBJECT"]["ROOT"]]["word"],
-    "subject_word": tmr_extended["TMR"][tmr_extended["TMR"][root]["lexical_sense_filled"]["SYN-STRUC"]["SUBJECT"]["ROOT"]]["word"]
+    "subject_word": tmr_extended["TMR"][tmr_extended["TMR"][root]["lexical_sense_filled"]["SYN-STRUC"]["SUBJECT"]["ROOT"]]["word"],
+
+    "subject_modifier": tmr_extended["TMR"][tmr_extended["TMR"][root]["lexical_sense_filled"]["SYN-STRUC"]["SUBJECT"]["ROOT"]]["COLOR"],
 })
 
 words.append({
@@ -102,8 +104,9 @@ p = Clause()
 for w in words:
     if "root" in w and w["root"]:
         p.predicate = VP(w["word"].lower())
-        p.subject = NP(w["subject_word"].lower())
-        p.object = NP(w["directobject_word"].lower())
+        p.subject = NP("a", w["subject_word"].lower())
+        p.subject.premodifiers.append(w["subject_modifier"].lower())
+        p.object = NP("a", w["directobject_word"].lower())
 
 # expected = This example shows how cool simplenlg is.
 print()
