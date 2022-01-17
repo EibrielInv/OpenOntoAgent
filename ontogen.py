@@ -108,6 +108,6 @@ for w in words:
         p.subject.premodifiers.append(w["subject_modifier"].lower())
         p.object = NP("a", w["directobject_word"].lower())
 
-# expected = This example shows how cool simplenlg is.
+# expected = A brown squirrel eats a nut.
 print()
 print(realise_en(p))
