@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Datascript</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css" media="screen">-->
+    </head>
+    <body>
+
+<script src="https://github.com/tonsky/datascript/releases/download/1.3.7/datascript-1.3.7.min.js"></script>
+
+<script>
+
+/* Schema
+
+Concept
+- Name -> string
+- Is-a -> Concept?
+- Part-of -> Concept?
+- Member-of -> Concept?
+- Domain -> Concept?
+- Range -> range [n1, n2]|[s1, s2, s3, s4]|Concept
+- Properties -> List of -> ConceptProperty
+// Needed for SemanticStructure
+- Null-sem -> boolean
+- Pointing to -> when using "^varX"
+
+ConceptValue
+- Name -> string
+(ex. Color, Intelligence, Friendliness, Fur-type, Easy-of-trainig,
+Formality, Has-name, Ordinality, Type, Value, Gender, Member-type,
+Complete, 
+)
+- Value -> string|number (Optional) (ex. red)
+- Default -> string|number
+
+ConceptProperty
+- Name -> string
+(ex. Agent, Theme, Beneficiary, Instrument, Location,
+Has-event-as-part, Before, After, Modality, Scope, Distance,
+Theme-of, Path,
+)
+- Default -> Concept (Optional)
+- Sem -> List of -> Concept (Optional)
+- Relaxable-to -> List of -> Concept (Optional)
+- Not -> List of -> Concept (Optional)
+
+CategorySet -> Set(
+ "Noun",
+ "Verb",
+ "Art",
+ "Prep",
+ "Aux",
+ "Conj",
+ "Punct", (Punctuation)
+ "Det",
+ "Adj",
+ "Adv",
+ "Inf", (Information)
+)
+
+TypeSet -> Set(
+ "Pro", (Pronoun)
+ "Ordinal"
+)
+
+TenseSet -> Set(
+ "Infinitive",
+ "Progressive",
+ "Imperative?"
+)
+
+NumberSet -> Set(
+ "Singular",
+ "Plural"
+)
+
+LexicalSense
+- From -> Lexeme
+- Category -> CategorySet
+- SyntacticStructure -> SyntacticStructure
+- SemanticStructure -> SemanticStructure
+- ExampleBindings -> List of -> Lexeme|LexicalSense
+
+Lexeme
+- String
+
+SyntacticStructure (Ordered list of elements ?)
+- Use-Example-Binding -> boolean (Optional) (Only in root element?)
+- Name -> string (Optional) (Only in next elements?)
+- Root -> Pointer/Variable
+- Category -> List of -> CategorySet
+- Type -> TypeSet (Optional)
+- Optional -> boolean (Optional)
+- Root-Word -> List of -> Lexeme (Optional)
+- Tense -> List of -> TenseSet (Optional)
+- Number -> List of -> NumberSet (Optional)
+- Next element -> SyntacticStructure
+
+
+SemanticStructure
+same as Concept?
+
+
+*/
+
+var ontology = [
+    [":db/add", 1, "concept/name", "animal"],
+    //
+    [":db/add", 2, "concept/name", "squirrel"],
+    [":db/add", 2, "concept/is-a", 1],
+    //
+    [":db/add", 3, "concept/name", "food"],
+    //
+    [":db/add", 4, "concept/name", "nut-foodstuff"],
+    [":db/add", 4, "concept/is-a", 3],
+    //
+    [":db/add", 5, "concept/name", "event"],
+    //
+    [":db/add", 6, "concept/name", "ingest"],
+    [":db/add", 6, "concept/is-a", 5],
+    [":db/add", 6, "concept/agent/sem", 1], // animal
+    [":db/add", 6, "concept/agent/relaxable-to", 7], // social-object
+    [":db/add", 6, "concept/theme/sem", 3], // food
+    [":db/add", 6, "concept/theme/sem", 8], // beverage
+    [":db/add", 6, "concept/theme/sem", 9], // ingestible-medication
+    [":db/add", 6, "concept/theme/relaxable-to", 1], // animal
+    [":db/add", 6, "concept/theme/relaxable-to", 10], // plant
+    [":db/add", 6, "concept/theme/not", 11], // human
+    //
+    [":db/add", 7, "concept/name", "social-object"],
+    //
+    [":db/add", 8, "concept/name", "beverage"],
+    //
+    [":db/add", 9, "concept/name", "ingestible-medication"],
+    //
+    [":db/add", 10, "concept/name", "plant"],
+    //
+    [":db/add", 11, "concept/name", "human"],
+]
+
+var lexicon = [
+    [":db/add", 100, "word/name", "squirrel"],
+    [":db/add", 101, "word/name", "eat"],
+    [":db/add", 102, "word/name", "nut"],
+    [":db/add", 103, "word/name", "drink"],
+    //
+    [":db/add", 200, "sense/word", 100], // squirrel
+    [":db/add", 200, "sense/category", "N"],
+    //[":db/add", 200, "sense/syn-struc/root", "$var0"], //todo
+    //[":db/add", 200, "sense/syn-struc/cat", "N"], //todo
+    [":db/add", 200, "sense/sem-struc", 2], // concept: squirrel
+    //
+    [":db/add", 201, "sense/word", 101], // eat
+    [":db/add", 201, "sense/category", "V"],
+    [":db/add", 201, "sense/sem-struc", 6], // concept: ingest
+    [":db/add", 201, "sense/concept-match", 202],
+    [":db/add", 300, "concept-match/theme/agent", 300],
+    //[":db/add", 300, "concept-override/theme/value", 300],
+    //
+    [":db/add", 202, "sense/word", 102], // nut
+    [":db/add", 202, "sense/category", "N"],
+    [":db/add", 202, "sense/sem-struc", 4], // concept: nut-foodstuff
+    //
+    [":db/add", 203, "sense/word", 103], // drink
+    [":db/add", 203, "sense/category", "V"],
+    [":db/add", 203, "sense/sem-struc", 6], // concept: ingest
+
+]
+
+var tmr = [
+    [":db/add", 300, "tmr/sentence", "A Brown Squirrel Is Eating a Nut"],
+    [":db/add", 300, "tmr/element", 400],
+    [":db/add", 300, "tmr/element", 401],
+    [":db/add", 300, "tmr/element", 402],
+    //
+    [":db/add", 400, "tmr-element/concept", 6], // ingest
+    [":db/add", 400, "tmr-element/agent", 401],
+    [":db/add", 400, "tmr-element/theme", 402],
+    //
+    [":db/add", 401, "tmr-element/concept", 2], // squirrel
+    //
+    [":db/add", 402, "tmr-element/concept", 4], // concept: nut-foodstuff
+]
+
+var schema = {
+    "concept/name": {
+        //":db/valueType": ":db.type/ref"
+    },
+
+    "sense/word": {
+        ":db/valueType": ":db.type/ref"
+    },
+
+    "tmr/sentence": {
+        //":db/valueType": ":db.type/ref"
+    },
+    "tmr/element": {
+        ":db/valueType": ":db.type/ref",
+        ":db/cardinality": ":db.cardinality/many"
+    },
+}
+
+var d = datascript;
+var db = d.empty_db(schema);
+//var db = d.empty_db();
+db = d.db_with(db, ontology);
+db = d.db_with(db, lexicon);
+db = d.db_with(db, tmr);
+db = d.db_with(db, [[":db/add", 300, "tmr/element", 403]]);
+
+var query;
+var res;
+
+/*
+query = '[:find ?name :where [_ "tmr/element" ?e] [?e "tmr-element/concept" ?c] [?c "concept/name" ?name]]';
+res = d.q(query, db);
+console.log(res);*/
+
+// Find all word senses related to the words
+query = '[:find ?w ?name :where [_ "tmr/element" ?e] [?e "tmr-element/concept" ?c] [?sw "sense/sem-struc" ?c] [?sw "sense/word" ?w] [?w "word/name" ?name]]';
+res = d.q(query, db);
+console.log(res);
+
+// For each word check if the sem-struc matches
+
+
+/*
+query = '["tmr-element/concept", ["concept/name"]]';
+res = d.pull(db, query, 1);
+console.log(res);
+*/
+
+</script>
+
+</body>
+</html>
