@@ -33,3 +33,8 @@ matic capabilities.
 - Datascript
 - Datomic
 - https://bit.ly/datalog-gist
+
+
+Factual Vs. Structural definitions
+
+Looks like Datascript is the way to go!

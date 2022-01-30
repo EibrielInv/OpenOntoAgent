@@ -11,7 +11,7 @@
     </head>
     <body>
 
-<script src="https://github.com/tonsky/datascript/releases/download/1.3.7/datascript-1.3.7.min.js"></script>
+<script src="datascript-1.3.7.min.js"></script>
 
 <script>
 
@@ -33,7 +33,7 @@ ConceptValue
 - Name -> string
 (ex. Color, Intelligence, Friendliness, Fur-type, Easy-of-trainig,
 Formality, Has-name, Ordinality, Type, Value, Gender, Member-type,
-Complete, 
+Complete,
 )
 - Value -> string|number (Optional) (ex. red)
 - Default -> string|number
@@ -103,7 +103,9 @@ SyntacticStructure (Ordered list of elements ?)
 
 
 SemanticStructure
-same as Concept?
+same as Concept? But everything becomes optional, and Pointer/Variables can be used
+It overrides information (on NPU) and filters information (on NPG)
+
 
 
 */
@@ -122,6 +124,8 @@ var ontology = [
     [":db/add", 5, "concept/name", "event"],
     //
     [":db/add", 6, "concept/name", "ingest"],
+
+    /*
     [":db/add", 6, "concept/is-a", 5],
     [":db/add", 6, "concept/agent/sem", 1], // animal
     [":db/add", 6, "concept/agent/relaxable-to", 7], // social-object
@@ -131,6 +135,7 @@ var ontology = [
     [":db/add", 6, "concept/theme/relaxable-to", 1], // animal
     [":db/add", 6, "concept/theme/relaxable-to", 10], // plant
     [":db/add", 6, "concept/theme/not", 11], // human
+    */
     //
     [":db/add", 7, "concept/name", "social-object"],
     //
@@ -188,16 +193,108 @@ var tmr = [
 ]
 
 var schema = {
+    // Concepts
     "concept/name": {
-        //":db/valueType": ":db.type/ref"
+        //":db/valueType": ":db.type/string",
+        //":db/unique": ":db.unique/identity"
     },
-
-    "sense/word": {
+    "concept/is-a": {
         ":db/valueType": ":db.type/ref"
     },
+    "concept/property": {
+        ":db/valueType": ":db.type/ref",
+        ":db/cardinality": ":db.cardinality/many"
+    },
 
+    // Concept property
+    "concept.property/name": {
+        //":db/valueType": ":db.type/string",
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "concept.property/default": {
+        ":db/valueType": ":db.type/ref", // concept
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "concept.property/semantic": {
+        ":db/valueType": ":db.type/ref", // concepts
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "concept.property/relaxable-to": {
+        ":db/valueType": ":db.type/ref", // concepts
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "concept.property/not": {
+        ":db/valueType": ":db.type/ref", // concepts
+        ":db/cardinality": ":db.cardinality/many"
+    },
+
+    // Lexeme
+    "lexeme": {
+        //":db/valueType": ":db.type/string",
+        ":db/unique": ":db.unique/identity"
+    },
+
+    // Lexical sense
+    "sense/lexeme": {
+        ":db/valueType": ":db.type/ref", // lexeme/string
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "sense/category": {
+        //":db/valueType": ":db.type/string", // category
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "sense/syntactic-structure": {
+        ":db/valueType": ":db.type/ref", // syntactic-structure/id
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "sense/semantic-structure": {
+        ":db/valueType": ":db.type/ref", // concept
+        ":db/cardinality": ":db.cardinality/one"
+    },
+
+    // Syntactic Structure
+    "syntactic-structure/id": {
+        ":db/valueType": ":db.type/ref", // lexeme/string
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "syntactic-structure/root": {
+        ":db/valueType": ":db.type/ref", // pointer
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "syntactic-structure/category": {
+        //":db/valueType": ":db.type/string", // category
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "syntactic-structure/type": {
+        //":db/valueType": ":db.type/string", // type
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "syntactic-structure/root-word": {
+        ":db/valueType": ":db.type/ref", // lexeme or lexical-sense
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "syntactic-structure/tense": {
+        //":db/valueType": ":db.type/string", // tense
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "syntactic-structure/number": {
+        //":db/valueType": ":db.type/string", // number (singular, plural)
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "syntactic-structure/optional": {
+        //":db/valueType": ":db.type/boolean", // optional
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "syntactic-structure/next": {
+        ":db/valueType": ":db.type/ref", // syntactic-structure
+        ":db/cardinality": ":db.cardinality/one"
+    },
+
+
+    // Tmr
     "tmr/sentence": {
-        //":db/valueType": ":db.type/ref"
+        //":db/valueType": ":db.type/string",
+        ":db/cardinality": ":db.cardinality/one"
     },
     "tmr/element": {
         ":db/valueType": ":db.type/ref",
@@ -205,26 +302,192 @@ var schema = {
     },
 }
 
+var data = [];
+var max_index = 0;
+
+function add(db, property, value, index) {
+    if (index == null) {
+        max_index += 1;
+        index = max_index;
+    }
+    db.push([":db/add", index, property, value]);
+    return db, index;
+}
+
+// Concepts
+data, concept_socialobject = add(data, "concept/name", "social-object");
+
+data, concept_human = add(data, "concept/name", "human");
+
+data, concept_animal = add(data, "concept/name", "animal");
+
+data, concept_plant = add(data, "concept/name", "plant");
+
+data, concept_squirrel = add(data, "concept/name", "squirrel");
+data, _ = add(data, "concept/is-a", concept_animal, concept_squirrel);
+
+data, concept_food = add(data, "concept/name", "food");
+
+data, concept_beverage = add(data, "concept/name", "beverage");
+
+data, concept_nutfood = add(data, "concept/name", "nut-foodstuff");
+data, _ = add(data, "concept/is-a", concept_food, concept_nutfood);
+
+data, concept_event = add(data, "concept/name", "event");
+
+data, concept_ingest = add(data, "concept/name", "ingest");
+data, _ = add(data, "concept/is-a", concept_event, concept_ingest);
+data, property = add(data, "concept.property/name", "agent");
+data, _ = add(data, "concept.property/semantic", concept_animal, property);
+data, _ = add(data, "concept.property/relaxable-to", concept_socialobject, property);
+data, _ = add(data, "concept/property", property, concept_ingest);
+data, property = add(data, "concept.property/name", "theme");
+data, _ = add(data, "concept.property/semantic", concept_food, property);
+data, _ = add(data, "concept.property/semantic", concept_beverage, property);
+data, _ = add(data, "concept.property/relaxable-to", concept_animal, property);
+data, _ = add(data, "concept.property/relaxable-to", concept_plant, property);
+data, _ = add(data, "concept.property/not", concept_human, property);
+data, _ = add(data, "concept/property", property, concept_ingest);
+
+// Lexicon
+
+data, synstruc_var0 = add(data, "pointer/id", "$var0");
+data, synstruc_var1 = add(data, "pointer/id", "$var1");
+data, synstruc_var2 = add(data, "pointer/id", "$var2");
+
+data, synstruc_noun = add(data, "syntactic-structure/id", "noun_syncstruct");
+data, _ = add(data, "syntactic-structure/root", synstruc_var0, synstruc_noun);
+data, _ = add(data, "syntactic-structure/category", "N", synstruc_noun);
+
+data, lexeme_squirrel = add(data, "lexeme", "squirrel");
+
+data, sense_squirrel = add(data, "sense/lexeme", lexeme_squirrel);
+data, _ = add(data, "sense/category", "N", sense_squirrel);
+data, _ = add(data, "sense/syntactic-structure", synstruc_noun, sense_squirrel);
+data, semstruct_squirrel = add(data, "concept/name", "squirrel");
+data, _ = add(data, "sense/semantic-structure", semstruct_squirrel, sense_squirrel);
+
+data, lexeme_nut = add(data, "lexeme", "nut");
+
+data, sense_nut = add(data, "sense/lexeme", lexeme_nut);
+data, _ = add(data, "sense/category", "N", sense_nut);
+data, _ = add(data, "sense/syntactic-structure", synstruc_noun, sense_nut);
+data, semstruct_nutfood = add(data, "concept/name", "nut-foodstuff");
+data, _ = add(data, "sense/semantic-structure", semstruct_nutfood, sense_nut);
+
+data, synstruc_verb_subject = add(data, "syntactic-structure/id", "verb_subject_syncstruct");
+data, _ = add(data, "syntactic-structure/root", synstruc_var1, synstruc_verb_subject);
+data, _ = add(data, "syntactic-structure/category", "N", synstruc_verb_subject);
+
+data, synstruc_verb_directobject = add(data, "syntactic-structure/id", "verb_subject_syncstruct");
+data, _ = add(data, "syntactic-structure/root", synstruc_var2, synstruc_verb_directobject);
+data, _ = add(data, "syntactic-structure/category", "N", synstruc_verb_directobject);
+data, _ = add(data, "syntactic-structure/option", true, synstruc_verb_directobject);
+
+data, synstruc_verb = add(data, "syntactic-structure/id", "verb_syncstruct");
+data, _ = add(data, "syntactic-structure/root", synstruc_var0, synstruc_verb);
+data, _ = add(data, "syntactic-structure/category", "V", synstruc_verb);
+data, _ = add(data, "syntactic-structure/subject", synstruc_verb_subject, synstruc_verb);
+data, _ = add(data, "syntactic-structure/directobject", synstruc_verb_directobject, synstruc_verb);
+
+data, lexeme_eat = add(data, "lexeme", "eat");
+
+data, semstruct_ingest = add(data, "concept/name", "ingest");
+data, property = add(data, "concept.property/name", "agent");
+data, _ = add(data, "concept.property/semantic", synstruc_var1, property);
+data, _ = add(data, "concept/property", property, semstruct_ingest);
+data, property = add(data, "concept.property/name", "theme");
+data, _ = add(data, "concept.property/semantic", synstruc_var2, property);
+data, _ = add(data, "concept/property", property, semstruct_ingest);
+
+data, sense_eat = add(data, "sense/lexeme", lexeme_eat);
+data, _ = add(data, "sense/category", "V", sense_eat);
+data, _ = add(data, "sense/syntactic-structure", synstruc_noun, sense_eat);
+data, _ = add(data, "sense/semantic-structure", semstruct_ingest, sense_eat);
+
+// TMR
+data, tmr1 = add(data, "tmr/sentence", "A Brown Squirrel Is Eating a Nut");
+
+data, element_squirrel = add(data, "concept/name", "squirrel1");
+data, property = add(data, "concept.property/name", "concept");
+data, _ = add(data, "concept.property/semantic", concept_squirrel, property);
+data, _ = add(data, "concept/property", property, element_squirrel);
+data, property = add(data, "concept.property/name", "color");
+data, _ = add(data, "concept.property/value", "brown", property);
+data, _ = add(data, "concept/property", property, element_squirrel);
+
+data, element_nutfood = add(data, "concept/name", "nutfood1");
+data, property = add(data, "concept.property/name", "concept");
+data, _ = add(data, "concept.property/semantic", concept_nutfood, property);
+data, _ = add(data, "concept/property", property, element_nutfood);
+
+data, element_ingest = add(data, "concept/name", "ingest1");
+data, property = add(data, "concept.property/name", "agent");
+data, _ = add(data, "concept.property/element", element_squirrel, property);
+data, _ = add(data, "concept/property", property, element_ingest);
+data, property = add(data, "concept.property/name", "theme");
+data, _ = add(data, "concept.property/element", element_nutfood, property);
+data, _ = add(data, "concept/property", property, element_ingest);
+data, property = add(data, "concept.property/name", "time");
+data, _ = add(data, "concept/property", "present", element_ingest);
+data, _ = add(data, "concept/value", property, element_ingest);
+data, property = add(data, "concept.property/name", "concept");
+data, _ = add(data, "concept.property/semantic", concept_ingest, property);
+data, _ = add(data, "concept/property", property, element_ingest);
+
+data, tmr1 = add(data, "tmr/element", "A Brown Squirrel Is Eating a Nut");
+data, tmr1 = add(data, "tmr/element", element_squirrel);
+data, tmr1 = add(data, "tmr/element", element_nutfood);
+data, tmr1 = add(data, "tmr/element", element_ingest);
+
+
 var d = datascript;
 var db = d.empty_db(schema);
-//var db = d.empty_db();
-db = d.db_with(db, ontology);
-db = d.db_with(db, lexicon);
-db = d.db_with(db, tmr);
-db = d.db_with(db, [[":db/add", 300, "tmr/element", 403]]);
+
+//db = d.db_with(db, ontology);
+//db = d.db_with(db, lexicon);
+//db = d.db_with(db, tmr);
+//db = d.db_with(db, [[":db/add", 300, "tmr/element", 403]]);
+
+db = d.db_with(db, data);
 
 var query;
 var res;
 
+console.log("Find al concepts in tmr")
+query = '[:find ?c ?name :where [_ "tmr/element" ?e] [?e "concept/property" ?p] [?p "concept.property/name" "concept"] [?p "concept.property/semantic" ?c] [?c "concept/name" ?name]]';
+res = d.q(query, db);
+console.log(res);
+
+console.log("Find all the lexemes for the concept 'squirrel'")
+query = '[:find ?name ?l :where [?l "lexeme" ?name] [?s "sense/lexeme" ?l] [?s "sense/semantic-structure" ?ss] [?ss "concept/name" "squirrel"]]';
+res = d.q(query, db);
+console.log(res);
+
+console.log("Find all the lexemes for the concept 'ingest'")
+query = '[:find ?name ?l :in $ ?conceptname :where [?l "lexeme" ?name] [?s "sense/lexeme" ?l] [?s "sense/semantic-structure" ?ss] [?ss "concept/name" ?conceptname]]';
+res = d.q(query, db, "ingest");
+console.log(res);
+
+
+
 /*
+query = '[:find ?e ?p ?v :where [?e ?p ?v]]'
+res = d.q(query, db);
+console.log(res);
+
+query = '[:find ?name ?sem :where [?c "concept/name" _] [?c "concept/property" ?p] [?p "concept.property/name" ?name] [?p "concept.property/semantic" ?sem]]';
+res = d.q(query, db);
+console.log(res);
+
 query = '[:find ?name :where [_ "tmr/element" ?e] [?e "tmr-element/concept" ?c] [?c "concept/name" ?name]]';
 res = d.q(query, db);
 console.log(res);*/
 
 // Find all word senses related to the words
-query = '[:find ?w ?name :where [_ "tmr/element" ?e] [?e "tmr-element/concept" ?c] [?sw "sense/sem-struc" ?c] [?sw "sense/word" ?w] [?w "word/name" ?name]]';
+/*query = '[:find ?w ?name :where [_ "tmr/element" ?e] [?e "tmr-element/concept" ?c] [?sw "sense/sem-struc" ?c] [?sw "sense/word" ?w] [?w "word/name" ?name]]';
 res = d.q(query, db);
-console.log(res);
+console.log(res);*/
 
 // For each word check if the sem-struc matches
 
