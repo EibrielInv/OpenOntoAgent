@@ -107,7 +107,7 @@ export class Ontoagent {
         if (this.lexemeExists(lexeme_name)) {
             return this.getLexemeId(lexeme_name)
         } else {
-            return this.addLexeme(lexeme_name, {})
+            return this.addLexeme(lexeme_name)
         }
     }
 
@@ -117,12 +117,12 @@ export class Ontoagent {
         return r.length > 0
     }
 
-    addLexeme(name: string, lexeme: any) :number {
+    addLexeme(name: string) :number {
         const lexeme_id = this.dbAdd(null, "lexeme", name)
         return lexeme_id
     }
 
-    addLexicalSense(lexeme_name: string, name: string, lexeme: any) :number {
+    addLexicalSense(lexeme_name: string, lexeme: any) :number {
         const lexeme_id = this.getLexemeIdOrAdd(lexeme_name)
         const lexicalsense_id = this.dbAdd(null, "sense/lexeme", lexeme_id)
 
@@ -138,16 +138,48 @@ export class Ontoagent {
         return lexicalsense_id
     }
 
-    linkLexeme(property_id: number, property_name: string, concept:string|Array<string>) {
-        if (typeof concept === 'string') {
-            const sem_concept = this.getLexemeIdOrAdd(concept)
+    linkLexeme(property_id: number, property_name: string, lexeme:string|Array<string>) {
+        if (typeof lexeme === 'string') {
+            const sem_concept = this.getLexemeIdOrAdd(lexeme)
             this.dbAdd(property_id, property_name, sem_concept)
         } else {
-            concept.forEach((e)=>{
+            lexeme.forEach((e)=>{
                 const sem_concept = this.getLexemeIdOrAdd(e)
                 this.dbAdd(property_id, property_name, sem_concept)
             })
         }
+    }
+
+    // Variables
+
+    getVariableId(variable_name: string) :number {
+        const query = '[:find ?e :in $ ?variablename :where [?e "variable" ?variablename]]'
+        const r = ds.q(query, this.db, variable_name)
+        return r[0][0]
+    }
+
+    addVariable(name: string) :number {
+        const lexeme_id = this.dbAdd(null, "variable", name)
+        return lexeme_id
+    }
+
+    variableExists(variable_name: string) {
+        const query = '[:find ?e :in $ ?variablename :where [?e "variable" ?variablename]]'
+        const r = ds.q(query, this.db, variable_name)
+        return r.length > 0
+    }
+
+    getVariableIdOrAdd(variable_name: string): number {
+        if (this.variableExists(variable_name)) {
+            return this.getVariableId(variable_name)
+        } else {
+            return this.addVariable(variable_name)
+        }
+    }
+
+    linkVariable(property_id: number, property_name: string, variable:string) {
+        const sem_concept = this.getVariableIdOrAdd(variable)
+        this.dbAdd(property_id, property_name, sem_concept)
     }
 
     // Syntactic structure
@@ -155,16 +187,26 @@ export class Ontoagent {
     addSynStruc(lexicalsense_id: number, synstruc: any) :number {
         const synstruc_id = this.dbAdd(null, "syntactic-structure/id", lexicalsense_id)
 
-        Object.keys(synstruc).forEach((k) => {
-            if (k == "CAT") {
-                this.dbAdd(synstruc_id, "syntactic-structure/category", synstruc[k])
-            } else if (k == "TYPE") {
-                this.dbAdd(synstruc_id, "syntactic-structure/type", synstruc[k])
-            } else if (k == "ROOT-WORD") {
-                //this.dbAdd(synstruc_id, "syntactic-structure/root-word", synstruc[k])
-                this.linkLexeme(synstruc_id, "syntactic-structure/root-word", synstruc[k])
+        for (let n=0; n<synstruc.length; n++) {
+            const element = synstruc[n]
+            if (element["NAME"] == "CAT") {
+                this.dbAdd(synstruc_id, "syntactic-structure/category", element["VALUE"])
+            } else if (element["NAME"] == "TYPE") {
+                this.dbAdd(synstruc_id, "syntactic-structure/type", element["VALUE"])
+            } else if (element["NAME"] == "TENSE") {
+                this.dbAdd(synstruc_id, "syntactic-structure/tense", element["VALUE"])
+            } else if (element["NAME"] == "NUMBER") {
+                this.dbAdd(synstruc_id, "syntactic-structure/number", element["VALUE"])
+            } else if (element["NAME"] == "OPT") {
+                if (element["VALUE"] == "+") {
+                    this.dbAdd(synstruc_id, "syntactic-structure/optional", 1)
+                }
+            } else if (element["NAME"] == "ROOT-WORD") {
+                this.linkLexeme(synstruc_id, "syntactic-structure/root-word", element["VALUE"])
+            } else if (element["NAME"] == "ROOT") {
+                this.linkVariable(synstruc_id, "syntactic-structure/root", element["VALUE"])
             }
-        })
+        }
 
         return synstruc_id
     }
