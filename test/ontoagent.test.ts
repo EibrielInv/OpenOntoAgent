@@ -51,12 +51,14 @@ test("Adding concept is-a", () => {
 test("Adding concept with property", () => {
     const o = new Ontoagent()
 
+    o.addConcept("ANIMAL", {})
     o.addConcept("INGEST", concepts["INGEST"])
 
     const result = [
-        [1, "concept/is-a", 2],
-        [1, "concept/name", "SQUIRREL"],
-        [2, "concept/name", "ANIMAL"],
+        [1, "concept/name", "ANIMAL"],
+        [2, "concept/name", "INGEST"],
+        [3, "concept.property/name", "AGENT"],
+        [3, "concept.property/semantic", 1],
     ]
 
     expect(o.query()).toStrictEqual(result)

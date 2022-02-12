@@ -29,7 +29,7 @@ export class Ontoagent {
                 this.dbAdd(concept_id, "concept/is-a", is_a_id)
             } else {
                 // Is a property
-
+                this.addConceptProperty(k, concept[k])
             }
         })
 
@@ -58,10 +58,22 @@ export class Ontoagent {
     getConceptId(concept_name: string) :number {
         const query = '[:find ?e :in $ ?conceptname :where [?e "concept/name" ?conceptname]]'
         const r = ds.q(query, this.db, concept_name)
-        return r[0]
+        return r[0][0]
     }
 
-    addConceptProperty() {
-        
+    addConceptProperty(property_name: string, property: any) {
+        const property_id = this.dbAdd(null, "concept.property/name", property_name)
+        if (property["SEM"]) {
+            if (typeof property["SEM"] === 'string') {
+                const sem_concept = this.getConceptId(property["SEM"])
+                if (sem_concept === null) {
+                    // TODO throw error
+                } else {
+                    this.dbAdd(property_id, "concept.property/semantic", sem_concept)
+                }
+            } else {
+                // TODO when array
+            }
+        }
     }
 }
