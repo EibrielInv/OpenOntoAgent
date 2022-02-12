@@ -20,12 +20,7 @@ export class Ontoagent {
         const concept_id = this.dbAdd(null, "concept/name", name)
         Object.keys(concept).forEach((k) => {
             if (k == "IS-A") {
-                let is_a_id: number
-                if (!this.conceptExists(concept[k])) {
-                    is_a_id = this.addConcept(concept[k], {})
-                } else {
-                    is_a_id = this.getConceptId(concept[k])
-                }
+                const is_a_id = this.getConceptIdOrAdd(concept[k])
                 this.dbAdd(concept_id, "concept/is-a", is_a_id)
             } else {
                 // Is a property
@@ -61,19 +56,34 @@ export class Ontoagent {
         return r[0][0]
     }
 
+    getConceptIdOrAdd(concept_name: string): number {
+        if (this.conceptExists(concept_name)) {
+            return this.getConceptId(concept_name)
+        } else {
+            return this.addConcept(concept_name, {})
+        }
+    }
+
     addConceptProperty(property_name: string, property: any) {
         const property_id = this.dbAdd(null, "concept.property/name", property_name)
         if (property["SEM"]) {
-            if (typeof property["SEM"] === 'string') {
-                const sem_concept = this.getConceptId(property["SEM"])
-                if (sem_concept === null) {
-                    // TODO throw error
-                } else {
-                    this.dbAdd(property_id, "concept.property/semantic", sem_concept)
-                }
-            } else {
-                // TODO when array
-            }
+            this.linkProperty(property_id, "concept.property/semantic", property["SEM"])
+        } else if (property["RELAXABLE-TO"]) {
+            this.linkProperty(property_id, "concept.property/relaxable-to", property["RELAXABLE-TO"])
+        } else if (property["NOT"]) {
+            this.linkProperty(property_id, "concept.property/not", property["NOT"])
+        }
+    }
+
+    linkProperty(property_id: number, property_name: string, concept:string|Array<string>) {
+        if (typeof concept === 'string') {
+            const sem_concept = this.getConceptIdOrAdd(concept)
+            this.dbAdd(property_id, property_name, sem_concept)
+        } else {
+            concept.forEach((e)=>{
+                const sem_concept = this.getConceptIdOrAdd(e)
+                this.dbAdd(property_id, property_name, sem_concept)
+            })
         }
     }
 }

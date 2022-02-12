@@ -9,6 +9,16 @@ const concepts = {
         "AGENT": {
             "SEM": "ANIMAL"
         }
+    },
+    "INGEST-2": {
+        "THEME": {
+            "RELAXABLE-TO": ["ANIMAL", "PLANT"]
+        }
+    },
+    "INGEST-3": {
+        "THEME": {
+            "NOT": "HUMAN"
+        }
     }
 }
 
@@ -48,7 +58,7 @@ test("Adding concept is-a", () => {
     expect(o.query()).toStrictEqual(result)
 })
 
-test("Adding concept with property", () => {
+test("Adding concept with SEM property, with linked concept", () => {
     const o = new Ontoagent()
 
     o.addConcept("ANIMAL", {})
@@ -59,6 +69,53 @@ test("Adding concept with property", () => {
         [2, "concept/name", "INGEST"],
         [3, "concept.property/name", "AGENT"],
         [3, "concept.property/semantic", 1],
+    ]
+
+    expect(o.query()).toStrictEqual(result)
+})
+
+test("Adding concept with SEM property, without linked concept", () => {
+    const o = new Ontoagent()
+
+    o.addConcept("INGEST", concepts["INGEST"])
+
+    const result = [
+        [1, "concept/name", "INGEST"],
+        [2, "concept.property/name", "AGENT"],
+        [2, "concept.property/semantic", 3],
+        [3, "concept/name", "ANIMAL"],
+    ]
+
+    expect(o.query()).toStrictEqual(result)
+})
+
+test("Adding concept with RELAXABLE-TO property, without linked concepts", () => {
+    const o = new Ontoagent()
+
+    o.addConcept("INGEST-2", concepts["INGEST-2"])
+
+    const result = [
+        [1, "concept/name", "INGEST-2"],
+        [2, "concept.property/name", "THEME"],
+        [2, "concept.property/relaxable-to", 3],
+        [2, "concept.property/relaxable-to", 4],
+        [3, "concept/name", "ANIMAL"],
+        [4, "concept/name", "PLANT"],
+    ]
+
+    expect(o.query()).toStrictEqual(result)
+})
+
+test("Adding concept with NOT property, without linked concepts", () => {
+    const o = new Ontoagent()
+
+    o.addConcept("INGEST-3", concepts["INGEST-3"])
+
+    const result = [
+        [1, "concept/name", "INGEST-3"],
+        [2, "concept.property/name", "THEME"],
+        [2, "concept.property/not", 3],
+        [3, "concept/name", "HUMAN"]
     ]
 
     expect(o.query()).toStrictEqual(result)
