@@ -60,7 +60,7 @@ export var schema = {
 
     // Syntactic Structure
     "syntactic-structure/id": {
-        ":db/valueType": ":db.type/ref", // lexeme/string
+        //":db/valueType": ":db.type/ref", // lexeme/string   . Or UUID?
         ":db/cardinality": ":db.cardinality/one"
     },
     "syntactic-structure/root": {
@@ -95,7 +95,20 @@ export var schema = {
         ":db/valueType": ":db.type/ref", // syntactic-structure
         ":db/cardinality": ":db.cardinality/one"
     },
+    "syntactic-structure/object": {
+        ":db/valueType": ":db.type/ref", // syntactic-structure
+        ":db/cardinality": ":db.cardinality/many"
+    },
 
+
+    // Variable
+    "variable/name": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "variable/sense.ref": {
+        ":db/valueType": ":db.type/ref", // lexical-sense
+        ":db/cardinality": ":db.cardinality/one"
+    },
 
     // Tmr
     "tmr/sentence": {

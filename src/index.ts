@@ -1,14 +1,17 @@
 import {schema} from "./schema"
+import { randomUUID } from 'crypto'
 
 var ds = require('datascript')
 
 export class Ontoagent {
     db: any
     current_id: number
+    current_synstruc_id: number
 
     constructor() {
         this.db = ds.empty_db(schema)
         this.current_id = 1
+        this.current_synstruc_id = 1
     }
 
     query() {
@@ -131,7 +134,7 @@ export class Ontoagent {
                 this.dbAdd(lexicalsense_id, "sense/category", lexeme[k])
             } else if (k == "SYN-STRUC") {
                 // Is a syntactic structure
-                this.addSynStruc(lexicalsense_id, lexeme[k])
+                this.addSynStruc(lexeme[k], lexicalsense_id)
             }
         })
 
@@ -152,40 +155,45 @@ export class Ontoagent {
 
     // Variables
 
-    getVariableId(variable_name: string) :number {
-        const query = '[:find ?e :in $ ?variablename :where [?e "variable" ?variablename]]'
-        const r = ds.q(query, this.db, variable_name)
+    getVariableId(variable_name: string, lexicalsense_id: number) :number {
+        const query = '[:find ?e :in $ ?variablename ?senseid :where [?e "variable/name" ?variablename] [?e "variable/sense.ref" ?senseid]]'
+        const r = ds.q(query, this.db, variable_name, lexicalsense_id)
         return r[0][0]
     }
 
-    addVariable(name: string) :number {
-        const lexeme_id = this.dbAdd(null, "variable", name)
-        return lexeme_id
+    addVariable(name: string, lexicalsense_id: number) :number {
+        const variable_id = this.dbAdd(null, "variable/name", name)
+        this.dbAdd(variable_id, "variable/sense.ref", lexicalsense_id)
+        return variable_id
     }
 
-    variableExists(variable_name: string) {
-        const query = '[:find ?e :in $ ?variablename :where [?e "variable" ?variablename]]'
-        const r = ds.q(query, this.db, variable_name)
+    variableExists(variable_name: string, lexicalsense_id: number) {
+        const query = '[:find ?e :in $ ?variablename ?senseid :where [?e "variable/name" ?variablename] [?e "variable/sense.ref" ?senseid]]'
+        const r = ds.q(query, this.db, variable_name, lexicalsense_id)
         return r.length > 0
     }
 
-    getVariableIdOrAdd(variable_name: string): number {
-        if (this.variableExists(variable_name)) {
-            return this.getVariableId(variable_name)
+    getVariableIdOrAdd(variable_name: string, lexicalsense_id: number): number {
+        if (this.variableExists(variable_name, lexicalsense_id)) {
+            return this.getVariableId(variable_name, lexicalsense_id)
         } else {
-            return this.addVariable(variable_name)
+            return this.addVariable(variable_name, lexicalsense_id)
         }
     }
 
-    linkVariable(property_id: number, property_name: string, variable:string) {
-        const sem_concept = this.getVariableIdOrAdd(variable)
+    linkVariable(property_id: number, property_name: string, variable: string, lexicalsense_id: number) {
+        const sem_concept = this.getVariableIdOrAdd(variable, lexicalsense_id)
         this.dbAdd(property_id, property_name, sem_concept)
     }
 
     // Syntactic structure
 
-    addSynStruc(lexicalsense_id: number, synstruc: any) :number {
-        const synstruc_id = this.dbAdd(null, "syntactic-structure/id", lexicalsense_id)
+    addSynStruc(synstruc: any, lexicalsense_id: number) :number {
+        // ID should be uuid
+        //const uuid = randomUUID()
+        //console.log("uuid", uuid)
+        const synstruc_id = this.dbAdd(null, "syntactic-structure/id", this.current_synstruc_id)
+        this.current_synstruc_id++
 
         for (let n=0; n<synstruc.length; n++) {
             const element = synstruc[n]
@@ -204,7 +212,11 @@ export class Ontoagent {
             } else if (element["NAME"] == "ROOT-WORD") {
                 this.linkLexeme(synstruc_id, "syntactic-structure/root-word", element["VALUE"])
             } else if (element["NAME"] == "ROOT") {
-                this.linkVariable(synstruc_id, "syntactic-structure/root", element["VALUE"])
+                this.linkVariable(synstruc_id, "syntactic-structure/root", element["VALUE"], lexicalsense_id)
+            } else {
+                // Is an object
+                const synstruc2_id = this.addSynStruc(element["VALUE"], lexicalsense_id)
+                this.dbAdd(synstruc_id, "syntactic-structure/object", synstruc2_id)
             }
         }
 
