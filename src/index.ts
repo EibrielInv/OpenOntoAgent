@@ -1,5 +1,4 @@
 import {schema} from "./schema"
-import { randomUUID } from 'crypto'
 
 var ds = require('datascript')
 
@@ -189,11 +188,9 @@ export class Ontoagent {
     // Syntactic structure
 
     addSynStruc(synstruc: any, lexicalsense_id: number) :number {
-        // ID should be uuid
-        //const uuid = randomUUID()
-        //console.log("uuid", uuid)
         const synstruc_id = this.dbAdd(null, "syntactic-structure/id", this.current_synstruc_id)
         this.current_synstruc_id++
+        this.dbAdd(lexicalsense_id, "sense/syntactic-structure", synstruc_id)
 
         for (let n=0; n<synstruc.length; n++) {
             const element = synstruc[n]

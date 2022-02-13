@@ -31,7 +31,7 @@ test("Adding empty concept", () => {
         [1, "concept/name", "EMPTY-CONCEPT"]
     ]
 
-    expect(o.query()).toStrictEqual(result)
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Concept exists", () => {
@@ -55,7 +55,7 @@ test("Adding concept is-a", () => {
         [2, "concept/name", "ANIMAL"],
     ]
 
-    expect(o.query()).toStrictEqual(result)
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding concept with SEM property, with linked concept", () => {
@@ -71,7 +71,7 @@ test("Adding concept with SEM property, with linked concept", () => {
         [3, "concept.property/semantic", 1],
     ]
 
-    expect(o.query()).toStrictEqual(result)
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding concept with SEM property, without linked concept", () => {
@@ -86,7 +86,7 @@ test("Adding concept with SEM property, without linked concept", () => {
         [3, "concept/name", "ANIMAL"],
     ]
 
-    expect(o.query()).toStrictEqual(result)
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding concept with RELAXABLE-TO property, without linked concepts", () => {
@@ -103,7 +103,7 @@ test("Adding concept with RELAXABLE-TO property, without linked concepts", () =>
         [4, "concept/name", "PLANT"],
     ]
 
-    expect(o.query()).toStrictEqual(result)
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding concept with NOT property, without linked concepts", () => {
@@ -118,5 +118,5 @@ test("Adding concept with NOT property, without linked concepts", () => {
         [3, "concept/name", "HUMAN"]
     ]
 
-    expect(o.query()).toStrictEqual(result)
+    expect(o.query()).toBeSameDB(result)
 })

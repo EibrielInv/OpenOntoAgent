@@ -86,7 +86,7 @@ test("Adding empty lexeme", () => {
         [1, "lexeme", "EMPTY-LEXEME"]
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding empty lexical sense", () => {
@@ -99,7 +99,7 @@ test("Adding empty lexical sense", () => {
         [2, "sense/lexeme", 1],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with cat", () => {
@@ -113,7 +113,7 @@ test("Adding lexical sense with cat", () => {
         [2, "sense/lexeme", 1],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with empty sync-struc", () => {
@@ -124,10 +124,11 @@ test("Adding lexical sense with empty sync-struc", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with category", () => {
@@ -138,11 +139,12 @@ test("Adding lexical sense with sync-struc with category", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/category", "N"],
         [3, "syntactic-structure/id", 1],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with type", () => {
@@ -153,11 +155,12 @@ test("Adding lexical sense with sync-struc with type", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/type", "PRO"],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with root word", () => {
@@ -168,6 +171,7 @@ test("Adding lexical sense with sync-struc with root word", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/root-word", 4],
         [3, "syntactic-structure/root-word", 5],
@@ -175,7 +179,7 @@ test("Adding lexical sense with sync-struc with root word", () => {
         [5, "lexeme", "TURN"],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with root", () => {
@@ -186,6 +190,7 @@ test("Adding lexical sense with sync-struc with root", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/root", 4],
         [4, "variable/name", "$VAR0"],
@@ -193,7 +198,7 @@ test("Adding lexical sense with sync-struc with root", () => {
     ]
     // TODO vars should not be global, but attached to a lexical sense
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with tense", () => {
@@ -204,12 +209,13 @@ test("Adding lexical sense with sync-struc with tense", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/tense", "INFINITIVE"],
         [3, "syntactic-structure/tense", "PROGRESSIVE"],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with number", () => {
@@ -220,11 +226,12 @@ test("Adding lexical sense with sync-struc with number", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/number", "SING"],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with optional", () => {
@@ -235,11 +242,12 @@ test("Adding lexical sense with sync-struc with optional", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/optional", 1],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with multiple elements", () => {
@@ -250,6 +258,7 @@ test("Adding lexical sense with sync-struc with multiple elements", () => {
     const result = [
         [1, "lexeme", "TEST"],
         [2, "sense/lexeme", 1],
+        [2, "sense/syntactic-structure", 3],
         [3, "syntactic-structure/category", "N"],
         [3, "syntactic-structure/id", 1],
         [3, "syntactic-structure/root", 4],
@@ -257,7 +266,7 @@ test("Adding lexical sense with sync-struc with multiple elements", () => {
         [4, "variable/sense.ref", 2],
     ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with hierarchical elements", () => {
@@ -266,18 +275,20 @@ test("Adding lexical sense with sync-struc with hierarchical elements", () => {
     o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-HIERARCHICAL"])
 
     const result = [
-        [ 1, 'lexeme', 'TEST' ],
-        [ 2, 'sense/lexeme', 1 ],
-        [ 3, 'syntactic-structure/id', 1 ],
-        [ 3, 'syntactic-structure/object', 4 ],
-        [ 4, 'syntactic-structure/id', 2 ],
-        [ 4, 'syntactic-structure/category', 'ART' ],
-        [ 4, 'syntactic-structure/root', 5 ],
-        [ 5, 'variable/name', '$VAR0' ],
-        [ 5, 'variable/sense.ref', 2 ]
+        [1, 'lexeme', 'TEST'],
+        [2, 'sense/lexeme', 1],
+        [2, "sense/syntactic-structure", 3],
+        [2, "sense/syntactic-structure", 4],
+        [3, 'syntactic-structure/id', 1],
+        [3, 'syntactic-structure/object', 4],
+        [4, 'syntactic-structure/id', 2],
+        [4, 'syntactic-structure/category', 'ART'],
+        [4, 'syntactic-structure/root', 5],
+        [5, 'variable/name', '$VAR0'],
+        [5, 'variable/sense.ref', 2]
       ]
 
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
 
 test("Adding lexical sense with sync-struc with 2 vars", () => {
@@ -287,20 +298,21 @@ test("Adding lexical sense with sync-struc with 2 vars", () => {
     o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-VAR"])
 
     const result = [
-        [ 1, 'lexeme', 'TEST' ],
-        [ 2, 'sense/lexeme', 1 ],
-        [ 3, 'syntactic-structure/id', 1 ],
-        [ 3, 'syntactic-structure/root', 4 ],
-        [ 4, 'variable/name', '$VAR1' ],
-        [ 4, 'variable/sense.ref', 2 ],
-        [ 5, 'sense/lexeme', 1 ],
-        [ 6, 'syntactic-structure/root', 7 ],
-        [ 6, 'syntactic-structure/id', 2 ],
-        [ 7, 'variable/name', '$VAR1' ],
-        [ 7, 'variable/sense.ref', 5 ],
+        [1, 'lexeme', 'TEST'],
+        [2, 'sense/lexeme', 1],
+        [2, "sense/syntactic-structure", 3],
+        [3, 'syntactic-structure/id', 1],
+        [3, 'syntactic-structure/root', 4],
+        [4, 'variable/name', '$VAR1'],
+        [4, 'variable/sense.ref', 2],
+        [5, 'sense/lexeme', 1],
+        [5, "sense/syntactic-structure", 6],
+        [6, 'syntactic-structure/root', 7],
+        [6, 'syntactic-structure/id', 2],
+        [7, 'variable/name', '$VAR1'],
+        [7, 'variable/sense.ref', 5],
       ]
 
 
-    //expect(o.query()).toStrictEqual(result)
-    expect(o.query()).toEqual(expect.objectContaining(result))
+    expect(o.query()).toBeSameDB(result)
 })
