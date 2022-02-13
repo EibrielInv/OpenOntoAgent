@@ -20,27 +20,34 @@ function arrayIncludes(array: Array<any>, includes: Array<any>) {
 
 expect.extend({
   toBeSameDB(received: Array<any>, expected: Array<any>): jest.CustomMatcherResult {
-    var msg: string = ""
+    var msg_received: string = ""
+    var msg_expected: string = ""
     var pass = true
 
     for (let n=0; n< received.length; n++) {
         const f = received[n]
         if (!arrayIncludes(expected,f)) {
-            msg += `- ${f}\n`
+            msg_received += JSON.stringify(f)+",\n"
             pass = false
         }
+    }
+    if (msg_received != "") {
+        msg_received = "Missing:\n"+msg_received
     }
 
     for (let n=0; n< expected.length; n++) {
         const f = expected[n]
-        if (!arrayIncludes(expected,f)) {
-            msg += `+ ${f}\n`
+        if (!arrayIncludes(received,f)) {
+            msg_expected += JSON.stringify(f)+",\n"
             pass = false
         }
     }
+    if (msg_expected != "") {
+        msg_expected = "Extra:\n"+msg_expected
+    }
 
     const message = () => {
-        return msg
+        return msg_received + msg_expected
     }
 
     return {

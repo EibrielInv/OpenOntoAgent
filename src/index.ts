@@ -6,11 +6,13 @@ export class Ontoagent {
     db: any
     current_id: number
     current_synstruc_id: number
+    current_semstruc_id: number
 
     constructor() {
         this.db = ds.empty_db(schema)
         this.current_id = 1
         this.current_synstruc_id = 1
+        this.current_semstruc_id = 1
     }
 
     query() {
@@ -26,7 +28,7 @@ export class Ontoagent {
                 this.dbAdd(concept_id, "concept/is-a", is_a_id)
             } else {
                 // Is a property
-                this.addConceptProperty(k, concept[k])
+                this.addConceptProperty(k, concept[k], concept_id)
             }
         })
 
@@ -74,8 +76,9 @@ export class Ontoagent {
         }
     }
 
-    addConceptProperty(property_name: string, property: any) {
+    addConceptProperty(property_name: string, property: any, concept_id: number) {
         const property_id = this.dbAdd(null, "concept.property/name", property_name)
+        this.dbAdd(concept_id, "concept/property", property_id)
         if (property["SEM"]) {
             this.linkProperty(property_id, "concept.property/semantic", property["SEM"])
         } else if (property["RELAXABLE-TO"]) {
@@ -134,6 +137,9 @@ export class Ontoagent {
             } else if (k == "SYN-STRUC") {
                 // Is a syntactic structure
                 this.addSynStruc(lexeme[k], lexicalsense_id)
+            } else if (k == "SEM-STRUC" && lexeme[k]!="") {
+                // Is a semantic structure
+                this.addSemStruc(lexeme[k], lexicalsense_id)
             }
         })
 
@@ -193,30 +199,73 @@ export class Ontoagent {
         this.dbAdd(lexicalsense_id, "sense/syntactic-structure", synstruc_id)
 
         for (let n=0; n<synstruc.length; n++) {
-            const element = synstruc[n]
-            if (element["NAME"] == "CAT") {
-                this.dbAdd(synstruc_id, "syntactic-structure/category", element["VALUE"])
-            } else if (element["NAME"] == "TYPE") {
-                this.dbAdd(synstruc_id, "syntactic-structure/type", element["VALUE"])
-            } else if (element["NAME"] == "TENSE") {
-                this.dbAdd(synstruc_id, "syntactic-structure/tense", element["VALUE"])
-            } else if (element["NAME"] == "NUMBER") {
-                this.dbAdd(synstruc_id, "syntactic-structure/number", element["VALUE"])
-            } else if (element["NAME"] == "OPT") {
-                if (element["VALUE"] == "+") {
+            const name = Object.keys(synstruc[n])[0]
+            const value = synstruc[n][name]
+            if (name == "CAT") {
+                this.dbAdd(synstruc_id, "syntactic-structure/category", value)
+            } else if (name == "TYPE") {
+                this.dbAdd(synstruc_id, "syntactic-structure/type", value)
+            } else if (name == "TENSE") {
+                this.dbAdd(synstruc_id, "syntactic-structure/tense", value)
+            } else if (name == "NUMBER") {
+                this.dbAdd(synstruc_id, "syntactic-structure/number", value)
+            } else if (name == "OPT") {
+                if (value == "+") {
                     this.dbAdd(synstruc_id, "syntactic-structure/optional", 1)
                 }
-            } else if (element["NAME"] == "ROOT-WORD") {
-                this.linkLexeme(synstruc_id, "syntactic-structure/root-word", element["VALUE"])
-            } else if (element["NAME"] == "ROOT") {
-                this.linkVariable(synstruc_id, "syntactic-structure/root", element["VALUE"], lexicalsense_id)
+            } else if (name == "ROOT-WORD") {
+                this.linkLexeme(synstruc_id, "syntactic-structure/root-word", value)
+            } else if (name == "ROOT") {
+                this.linkVariable(synstruc_id, "syntactic-structure/root", value, lexicalsense_id)
             } else {
-                // Is an object
-                const synstruc2_id = this.addSynStruc(element["VALUE"], lexicalsense_id)
-                this.dbAdd(synstruc_id, "syntactic-structure/object", synstruc2_id)
+                if (typeof value === 'string') {
+                    this.dbAdd(synstruc_id, "syntactic-structure/value", value)
+                } else {
+                    // Is an object
+                    const synstruc2_id = this.addSynStruc(value, lexicalsense_id)
+                    this.dbAdd(synstruc_id, "syntactic-structure/object", synstruc2_id)
+                }
             }
         }
 
         return synstruc_id
+    }
+
+
+    // Semantic structure
+
+    addSemStruc(semstruc: any, lexicalsense_id: number) :number {
+        const semstruc_id = this.dbAdd(null, "semantic-structure/id", this.current_semstruc_id)
+        this.current_semstruc_id++
+        this.dbAdd(lexicalsense_id, "sense/semantic-structure", semstruc_id)
+
+        if (typeof semstruc === 'string') {
+            this.addSemStrucConceptProperty(semstruc, null, semstruc_id)
+        } else {
+            Object.keys(semstruc).forEach((k)=>{
+                this.addSemStrucConceptProperty(k, semstruc[k], semstruc_id)
+            })
+        }
+
+        return semstruc_id
+    }
+
+    addSemStrucConceptProperty(concept_name: string, properties: any, lexicalsense_id: number) {
+        const ssproperty_id = this.dbAdd(null, "semantic-structure.concept.property/name", concept_name)
+        this.dbAdd(lexicalsense_id, "semantic-structure.concept.property/property", ssproperty_id)
+        if (typeof properties === 'string') {
+            this.dbAdd(ssproperty_id, "semantic-structure.concept.property/value", properties)
+            return ssproperty_id
+        }
+
+        if (properties === null) {
+            return ssproperty_id
+        }
+
+        Object.keys(properties).forEach((k)=>{
+            this.addSemStrucConceptProperty(k, properties[k], ssproperty_id)
+        })
+
+        return ssproperty_id
     }
 }

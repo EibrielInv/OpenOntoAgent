@@ -101,6 +101,33 @@ export var schema = {
     },
 
 
+    // Semantic Structure
+    "semantic-structure/id": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "semantic-structure/concept": {
+        ":db/valueType": ":db.type/ref", // semantic-structure concept to match
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "semantic-structure.concept/name": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "semantic-structure.concept/property": {
+        ":db/valueType": ":db.type/ref", // semantic-structure concept property to match
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "semantic-structure.concept.property/name": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "semantic-structure.concept.property/value": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "semantic-structure.concept.property/property": {
+        ":db/valueType": ":db.type/ref", // semantic-structure concept property property to match
+        ":db/cardinality": ":db.cardinality/many"
+    },
+
+
     // Variable
     "variable/name": {
         ":db/cardinality": ":db.cardinality/one"

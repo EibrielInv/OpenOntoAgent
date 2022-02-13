@@ -20,58 +20,58 @@ const lexeme: any = {
         },
         "WITH-SYNSTRUC-W-CAT": {
             "SYN-STRUC": [
-                {"NAME": "CAT", "VALUE": "N"}
+                {"CAT": "N"}
             ]
         },
         "WITH-SYNSTRUC-W-ROOT": {
             "SYN-STRUC": [
-                {"NAME": "ROOT", "VALUE": "$VAR0"}
+                {"ROOT": "$VAR0"}
             ]
         },
         "WITH-SYNSTRUC-W-TYPE": {
             "SYN-STRUC": [
-                {"NAME": "TYPE", "VALUE": "PRO"}
+                {"TYPE": "PRO"}
             ]
         },
         "WITH-SYNSTRUC-W-ROOTWORD": {
             "SYN-STRUC": [
-                {"NAME": "ROOT-WORD", "VALUE": ["STOP", "TURN"]}
+                {"ROOT-WORD": ["STOP", "TURN"]}
             ]
         },
         "WITH-SYNSTRUC-W-TENSE": {
             "SYN-STRUC": [
-                {"NAME": "TENSE", "VALUE": ["INFINITIVE", "PROGRESSIVE"]}
+                {"TENSE": ["INFINITIVE", "PROGRESSIVE"]}
             ]
         },
         "WITH-SYNSTRUC-W-NUMBER": {
             "SYN-STRUC": [
-                {"NAME": "NUMBER", "VALUE": "SING"}
+                {"NUMBER": "SING"}
             ]
         },
         "WITH-SYNSTRUC-W-OPTIONAL": {
             "SYN-STRUC": [
-                {"NAME": "OPT", "VALUE": "+"}
+                {"OPT": "+"}
             ]
         },
         //
         "WITH-SYNSTRUC-W-MULTIPLE": {
             "SYN-STRUC": [
-                {"NAME": "ROOT", "VALUE": "$VAR1"},
-                {"NAME": "CAT", "VALUE": "N"},
+                {"ROOT": "$VAR1"},
+                {"CAT": "N"},
             ]
         },
         "WITH-SYNSTRUC-W-HIERARCHICAL": {
             "SYN-STRUC": [
-                {"NAME": "ART", "VALUE": [
-                        {"NAME": "ROOT", "VALUE": "$VAR0"},
-                        {"NAME": "CAT", "VALUE": "ART"}
+                {"ART": [
+                        {"ROOT": "$VAR0"},
+                        {"CAT": "ART"}
                     ]
                 },
             ]
         },
         "WITH-SYNSTRUC-W-VAR": {
             "SYN-STRUC": [
-                {"NAME": "ROOT", "VALUE": "$VAR1"}
+                {"ROOT": "$VAR1"}
             ]
         }
     }
@@ -277,7 +277,6 @@ test("Adding lexical sense with sync-struc with hierarchical elements", () => {
     const result = [
         [1, 'lexeme', 'TEST'],
         [2, 'sense/lexeme', 1],
-        [2, "sense/syntactic-structure", 3],
         [2, "sense/syntactic-structure", 4],
         [3, 'syntactic-structure/id', 1],
         [3, 'syntactic-structure/object', 4],

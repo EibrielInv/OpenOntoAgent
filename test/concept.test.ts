@@ -67,6 +67,7 @@ test("Adding concept with SEM property, with linked concept", () => {
     const result = [
         [1, "concept/name", "ANIMAL"],
         [2, "concept/name", "INGEST"],
+        [2, "concept/property", 3],
         [3, "concept.property/name", "AGENT"],
         [3, "concept.property/semantic", 1],
     ]
@@ -81,6 +82,7 @@ test("Adding concept with SEM property, without linked concept", () => {
 
     const result = [
         [1, "concept/name", "INGEST"],
+        [1, "concept/property", 2],
         [2, "concept.property/name", "AGENT"],
         [2, "concept.property/semantic", 3],
         [3, "concept/name", "ANIMAL"],
@@ -96,6 +98,7 @@ test("Adding concept with RELAXABLE-TO property, without linked concepts", () =>
 
     const result = [
         [1, "concept/name", "INGEST-2"],
+        [1, "concept/property", 2],
         [2, "concept.property/name", "THEME"],
         [2, "concept.property/relaxable-to", 3],
         [2, "concept.property/relaxable-to", 4],
@@ -113,6 +116,7 @@ test("Adding concept with NOT property, without linked concepts", () => {
 
     const result = [
         [1, "concept/name", "INGEST-3"],
+        [1, "concept/property", 2],
         [2, "concept.property/name", "THEME"],
         [2, "concept.property/not", 3],
         [3, "concept/name", "HUMAN"]
