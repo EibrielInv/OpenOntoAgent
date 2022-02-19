@@ -95,7 +95,7 @@ const lexicon: any = {
 test("Adding A-ART1 lexical sense", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("A", lexicon["A"]["A-ART1"])
+    o.lexeme.addLexicalSense("A", lexicon["A"]["A-ART1"])
 
     const result: any = [
         [3,"syntactic-structure/object",4],
@@ -122,7 +122,7 @@ test("Adding A-ART1 lexical sense", () => {
 test("Adding DESTINATION-N601 lexical sense", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("DESTINATION", lexicon["DESTINATION"]["DESTINATION-N601"])
+    o.lexeme.addLexicalSense("DESTINATION", lexicon["DESTINATION"]["DESTINATION-N601"])
 
     const result: any = [
         [1,"lexeme","DESTINATION"],

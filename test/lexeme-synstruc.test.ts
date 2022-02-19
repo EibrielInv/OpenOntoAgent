@@ -80,7 +80,7 @@ const lexeme: any = {
 test("Adding empty lexeme", () => {
     const o = new Ontoagent()
 
-    o.addLexeme("EMPTY-LEXEME")
+    o.lexeme.addLexeme("EMPTY-LEXEME")
 
     const result = [
         [1, "lexeme", "EMPTY-LEXEME"]
@@ -92,7 +92,7 @@ test("Adding empty lexeme", () => {
 test("Adding empty lexical sense", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("EMPTY-LEXEME", {})
+    o.lexeme.addLexicalSense("EMPTY-LEXEME", {})
 
     const result = [
         [1, "lexeme", "EMPTY-LEXEME"],
@@ -105,7 +105,7 @@ test("Adding empty lexical sense", () => {
 test("Adding lexical sense with cat", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-CAT"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-CAT"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -119,7 +119,7 @@ test("Adding lexical sense with cat", () => {
 test("Adding lexical sense with empty sync-struc", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-EMPTY-SYNSTRUC"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-EMPTY-SYNSTRUC"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -134,7 +134,7 @@ test("Adding lexical sense with empty sync-struc", () => {
 test("Adding lexical sense with sync-struc with category", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-CAT"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-CAT"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -150,7 +150,7 @@ test("Adding lexical sense with sync-struc with category", () => {
 test("Adding lexical sense with sync-struc with type", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-TYPE"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-TYPE"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -166,7 +166,7 @@ test("Adding lexical sense with sync-struc with type", () => {
 test("Adding lexical sense with sync-struc with root word", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-ROOTWORD"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-ROOTWORD"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -185,7 +185,7 @@ test("Adding lexical sense with sync-struc with root word", () => {
 test("Adding lexical sense with sync-struc with root", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-ROOT"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-ROOT"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -204,7 +204,7 @@ test("Adding lexical sense with sync-struc with root", () => {
 test("Adding lexical sense with sync-struc with tense", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-TENSE"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-TENSE"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -221,7 +221,7 @@ test("Adding lexical sense with sync-struc with tense", () => {
 test("Adding lexical sense with sync-struc with number", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-NUMBER"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-NUMBER"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -237,7 +237,7 @@ test("Adding lexical sense with sync-struc with number", () => {
 test("Adding lexical sense with sync-struc with optional", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-OPTIONAL"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-OPTIONAL"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -253,7 +253,7 @@ test("Adding lexical sense with sync-struc with optional", () => {
 test("Adding lexical sense with sync-struc with multiple elements", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-MULTIPLE"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-MULTIPLE"])
 
     const result = [
         [1, "lexeme", "TEST"],
@@ -272,7 +272,7 @@ test("Adding lexical sense with sync-struc with multiple elements", () => {
 test("Adding lexical sense with sync-struc with hierarchical elements", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-HIERARCHICAL"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-HIERARCHICAL"])
 
     const result = [
         [1, 'lexeme', 'TEST'],
@@ -293,8 +293,8 @@ test("Adding lexical sense with sync-struc with hierarchical elements", () => {
 test("Adding lexical sense with sync-struc with 2 vars", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-VAR"])
-    o.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-VAR"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-VAR"])
+    o.lexeme.addLexicalSense("TEST", lexeme["TEST"]["WITH-SYNSTRUC-W-VAR"])
 
     const result = [
         [1, 'lexeme', 'TEST'],

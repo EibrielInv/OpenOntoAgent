@@ -25,7 +25,7 @@ const concepts = {
 test("Adding empty concept", () => {
     const o = new Ontoagent()
 
-    o.addConcept("EMPTY-CONCEPT", {})
+    o.concept.addConcept("EMPTY-CONCEPT", {})
 
     const result = [
         [1, "concept/name", "EMPTY-CONCEPT"]
@@ -37,17 +37,17 @@ test("Adding empty concept", () => {
 test("Concept exists", () => {
     const o = new Ontoagent()
 
-    expect(o.conceptExists("SQUIRREL")).toBeFalsy()
+    expect(o.concept.conceptExists("SQUIRREL")).toBeFalsy()
 
-    o.addConcept("SQUIRREL", {})
+    o.concept.addConcept("SQUIRREL", {})
 
-    expect(o.conceptExists("SQUIRREL")).toBeTruthy()
+    expect(o.concept.conceptExists("SQUIRREL")).toBeTruthy()
 })
 
 test("Adding concept is-a", () => {
     const o = new Ontoagent()
 
-    o.addConcept("SQUIRREL", concepts["SQUIRREL"])
+    o.concept.addConcept("SQUIRREL", concepts["SQUIRREL"])
 
     const result = [
         [1, "concept/is-a", 2],
@@ -61,8 +61,8 @@ test("Adding concept is-a", () => {
 test("Adding concept with SEM property, with linked concept", () => {
     const o = new Ontoagent()
 
-    o.addConcept("ANIMAL", {})
-    o.addConcept("INGEST", concepts["INGEST"])
+    o.concept.addConcept("ANIMAL", {})
+    o.concept.addConcept("INGEST", concepts["INGEST"])
 
     const result = [
         [1, "concept/name", "ANIMAL"],
@@ -78,7 +78,7 @@ test("Adding concept with SEM property, with linked concept", () => {
 test("Adding concept with SEM property, without linked concept", () => {
     const o = new Ontoagent()
 
-    o.addConcept("INGEST", concepts["INGEST"])
+    o.concept.addConcept("INGEST", concepts["INGEST"])
 
     const result = [
         [1, "concept/name", "INGEST"],
@@ -94,7 +94,7 @@ test("Adding concept with SEM property, without linked concept", () => {
 test("Adding concept with RELAXABLE-TO property, without linked concepts", () => {
     const o = new Ontoagent()
 
-    o.addConcept("INGEST-2", concepts["INGEST-2"])
+    o.concept.addConcept("INGEST-2", concepts["INGEST-2"])
 
     const result = [
         [1, "concept/name", "INGEST-2"],
@@ -112,7 +112,7 @@ test("Adding concept with RELAXABLE-TO property, without linked concepts", () =>
 test("Adding concept with NOT property, without linked concepts", () => {
     const o = new Ontoagent()
 
-    o.addConcept("INGEST-3", concepts["INGEST-3"])
+    o.concept.addConcept("INGEST-3", concepts["INGEST-3"])
 
     const result = [
         [1, "concept/name", "INGEST-3"],

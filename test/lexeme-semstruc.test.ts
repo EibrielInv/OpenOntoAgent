@@ -23,7 +23,7 @@ const lexeme: any = {
 test("Adding lexical sense with simple sem-struc", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("SEM", lexeme["SEM"]["SEM1"])
+    o.lexeme.addLexicalSense("SEM", lexeme["SEM"]["SEM1"])
 
     const result = [
         [1, "lexeme", "SEM"],
@@ -40,7 +40,7 @@ test("Adding lexical sense with simple sem-struc", () => {
 test("Adding lexical sense with complex sem-struc", () => {
     const o = new Ontoagent()
 
-    o.addLexicalSense("SEM", lexeme["SEM"]["SEM2"])
+    o.lexeme.addLexicalSense("SEM", lexeme["SEM"]["SEM2"])
 
     const result = [
         [1, "lexeme", "SEM"],

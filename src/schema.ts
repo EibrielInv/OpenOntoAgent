@@ -138,12 +138,21 @@ export var schema = {
     },
 
     // Tmr
+    "tmr/id": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "tmr/instance": {
+        ":db/valueType": ":db.type/ref",
+        ":db/cardinality": ":db.cardinality/many"
+    },
     "tmr/sentence": {
-        //":db/valueType": ":db.type/string",
         ":db/cardinality": ":db.cardinality/one"
     },
     "tmr/element": {
         ":db/valueType": ":db.type/ref",
         ":db/cardinality": ":db.cardinality/many"
+    },
+    "tmr.instance/id": {
+        ":db/cardinality": ":db.cardinality/one"
     },
 }
