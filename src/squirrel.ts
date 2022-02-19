@@ -1,3 +1,4 @@
+import {OntologyDB, LexiconDB} from "../src/types"
 
 export {
     tmr,
@@ -63,7 +64,7 @@ sem-struc
     THEME  ^$var2
 */
 
-const lexicon = {
+const lexicon:LexiconDB = {
     "A": {
         "A-ART1": {
             "CAT": "ART",
@@ -71,11 +72,11 @@ const lexicon = {
             "EX": "A cat walked in the room",
             "COMMENTS": "",
             "TMR-HEAD": "$VAR1",
-            "SYN-STRUC": {
-                "ART": {"ROOT": "$VAR0", "CAT": "ART"},
-                "ROOT": "$VAR1",
-                "CAT": "N",
-            },
+            "SYN-STRUC": [
+                {"ART": [{"ROOT": "$VAR0"}, {"CAT": "ART"}]},
+                {"ROOT": "$VAR1"},
+                {"CAT": "N"},
+            ],
             "SEM-STRUC": "",
             "OUTPUT-SYNTAX": "NP",
             "MEANING-PROCEDURES": [
@@ -91,10 +92,10 @@ const lexicon = {
     "SQUIRREL": {
         "SQUIRREL-N1": {
             "CAT": "N",
-            "SYN-STRUC": {
-                "ROOT": "$VAR0",
-                "CAT": "N"
-            },
+            "SYN-STRUC": [
+                {"ROOT": "$VAR0"},
+                {"CAT": "N"}
+            ],
             "SEM-STRUC": "SQUIRREL",
         }
     },
@@ -106,18 +107,18 @@ const lexicon = {
             "EX": "She is sick",
             "COMMENTS": "",
             "TMR-HEAD": "NIL",
-            "SYN-STRUC": {
-                "SUBJECT": {
-                    "ROOT": "$VAR1",
-                    "CAT": "N"
-                },
-                "ROOT": "$VAR0",
-                "CAT": "AUX",
-                "V": {
-                    "ROOT": "$VAR2",
-                    "CAT": "V"
-                }
-            },
+            "SYN-STRUC": [
+                {"SUBJECT": [
+                    {"ROOT": "$VAR1"},
+                    {"CAT": "N"}
+                ]},
+                {"ROOT": "$VAR0"},
+                {"CAT": "AUX"},
+                {"V": [
+                    {"ROOT": "$VAR2"},
+                    {"CAT": "V"}
+                ]}
+            ],
             "SEM-STRUC": ""
         }
     },
@@ -125,19 +126,19 @@ const lexicon = {
     "EAT": {
         "EAT-V1": {
             "CAT": "V",
-            "SYN-STRUC": {
-                "SUBJECT": {
-                    "ROOT": "$VAR1",
-                    "CAT": "N"
-                },
-                "ROOT": "$VAR0",
-                "CAT": "V",
-                "DIRECTOBJECT": {
-                    "ROOT": "$VAR2",
-                    "CAT": "N",
-                    "OPT": "+"
-                },
-            },
+            "SYN-STRUC": [
+                {"SUBJECT": [
+                    {"ROOT": "$VAR1"},
+                    {"CAT": "N"}
+                ]},
+                {"ROOT": "$VAR0"},
+                {"CAT": "V"},
+                {"DIRECTOBJECT": [
+                    {"ROOT": "$VAR2"},
+                    {"CAT": "N"},
+                    {"OPT": "+"}
+                ]},
+            ],
             "SEM-STRUC": {
                 "INGEST": {
                     "AGENT": {
@@ -154,10 +155,10 @@ const lexicon = {
     "NUT": {
         "NUT-FOODSTUFF-N1": {
             "CAT": "N",
-            "SYN-STRUC": {
-                "ROOT": "$VAR0",
-                "CAT": "N"
-            },
+            "SYN-STRUC": [
+                {"ROOT": "$VAR0"},
+                {"CAT": "N"}
+            ],
             "SEM-STRUC": "NUT-FOODSTUFF"
         }
     }
@@ -175,7 +176,7 @@ INGEST
 
 */
 
-const ontology = {
+const ontology:OntologyDB = {
     "INGEST": {
         "AGENT": {
             "SEM": "ANIMAL",

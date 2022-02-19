@@ -1,3 +1,4 @@
+import {ConceptDB} from "./types"
 var ds = require('datascript')
 
 export class Concept {
@@ -7,11 +8,11 @@ export class Concept {
         this.ontoagent = ontoagent
     }
 
-    addConcept(name: string, concept: any) :number {
+    addConcept(name: string, concept: ConceptDB) :number {
         const concept_id = this.ontoagent.dbAdd(null, "concept/name", name)
         Object.keys(concept).forEach((k) => {
             if (k == "IS-A") {
-                const is_a_id = this.getConceptIdOrAdd(concept[k])
+                const is_a_id = this.getConceptIdOrAdd(concept[k] as string)
                 this.ontoagent.dbAdd(concept_id, "concept/is-a", is_a_id)
             } else {
                 // Is a property
