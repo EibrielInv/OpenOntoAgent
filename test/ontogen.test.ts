@@ -1,7 +1,7 @@
 import {OntologyDB, LexiconDB} from "../src/types"
 import {Ontoagent} from "../src/index"
 
-import {ontology, lexicon} from "../src/squirrel"
+import {ontology, lexicon, tmr} from "../src/squirrel"
 
 var ds = require('datascript')
 
@@ -44,19 +44,14 @@ test("Ontogen", () => {
         })
     })
 
-    const result = [["EAT-V1"]]
+    o.tmr.addTmr(tmr["TMR"])
 
-    const query = '[ \
-        :find ?lexemename \
-        :in $ ?conceptname \
-        :where \
-        [?l, "lexeme", ?lexemename] \
-        [?s, "sense/lexeme", ?l]\
-        [?s, "sense/semantic-structure", ?ss] \
-        [?ss "semantic-structure.concept.property/property" ?p] \
-        [?p "semantic-structure.concept.property/name" ?conceptname]\
-    ]'
+    const result = [
+        ["INGEST"],
+        ["SQUIRREL"],
+        ["NUT-FOODSTUFF"],
+    ]
 
-    expect(ds.q(query, o.db, "INGEST")).toBeSameDB(result)
+    expect(o.ontogen.getTMRConcepts(1)).toBeSameDB(result)
 
 })

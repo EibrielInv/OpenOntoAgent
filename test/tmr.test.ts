@@ -51,7 +51,7 @@ test("Adding instances with instance property", () => {
     o.tmr.addTmr(tmr["TMR2"])
 
     const result = [
-        [1, "tmr/id", 1],
+        [1,"tmr/id", 1],
         [1,"tmr/instance",2],
         [2,"tmr.instance/id","INGEST-1"],
         [2,"semantic-structure.concept.property/property",3],
