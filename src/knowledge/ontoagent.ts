@@ -4,7 +4,7 @@ import {Lexeme} from "./lexeme"
 import {SemanticStructure} from "./semantic-structure"
 import {SyntacticStructure} from "./syntactic-structure"
 import {Tmr} from "./tmr"
-import {Ontogen} from "./ontogen"
+import {Ontogen} from "../ontogen"
 
 var ds = require('datascript')
 

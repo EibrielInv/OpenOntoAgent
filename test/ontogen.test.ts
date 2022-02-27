@@ -1,7 +1,7 @@
 import {OntologyDB, LexiconDB} from "../src/types"
 import {Ontoagent} from "../src/index"
 
-import {ontology, lexicon, tmr} from "../src/squirrel"
+import {ontology, lexicon, tmr} from "../src/knowledge/squirrel"
 
 var ds = require('datascript')
 

@@ -1,4 +1,4 @@
-import {ConceptDB} from "./types"
+import {ConceptDB} from "../types"
 var ds = require('datascript')
 
 export class Concept {

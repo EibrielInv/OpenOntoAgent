@@ -1,4 +1,4 @@
-import { Ontoagent } from "./ontoagent"
+import { Ontoagent } from "./knowledge/ontoagent"
 
 export {
     Ontoagent

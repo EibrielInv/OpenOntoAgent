@@ -1,4 +1,4 @@
-import {OntologyDB, LexiconDB} from "../src/types"
+import {OntologyDB, LexiconDB} from "../types"
 
 export {
     tmr,
