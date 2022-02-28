@@ -1,5 +1,5 @@
 import {OntologyDB, LexiconDB} from "../src/types"
-import {Ontoagent} from "../src/index"
+import {Ontoagent, Ontogen} from "../src/index"
 
 import {ontology, lexicon, tmr} from "../src/knowledge/squirrel"
 
@@ -52,6 +52,8 @@ test("Ontogen", () => {
         ["NUT-FOODSTUFF"],
     ]
 
-    expect(o.ontogen.getTMRConcepts(1)).toBeSameDB(result)
+    const gen = new Ontogen(o)
+
+    expect(gen.getTMRConcepts(1)).toBeSameDB(result)
 
 })

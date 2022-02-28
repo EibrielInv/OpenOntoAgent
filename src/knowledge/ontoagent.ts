@@ -4,7 +4,6 @@ import {Lexeme} from "./lexeme"
 import {SemanticStructure} from "./semantic-structure"
 import {SyntacticStructure} from "./syntactic-structure"
 import {Tmr} from "./tmr"
-import {Ontogen} from "../ontogen"
 
 var ds = require('datascript')
 
@@ -15,7 +14,6 @@ export class Ontoagent {
     semanticStructure:SemanticStructure
     syntacticStructure:SyntacticStructure
     tmr:Tmr
-    ontogen:Ontogen
 
     current_id:number
 
@@ -28,7 +26,6 @@ export class Ontoagent {
         this.semanticStructure = new SemanticStructure(this)
         this.syntacticStructure = new SyntacticStructure(this)
         this.tmr = new Tmr(this)
-        this.ontogen = new Ontogen(this)
     }
 
     query() {
@@ -36,6 +33,7 @@ export class Ontoagent {
         return ds.q(query, this.db)
     }
 
+    // BOILERPLATED
     dbAdd(id:null|number, link:string|number, value:string|number|Array<string|number>) :number {
         var id_to_use: number
         if (id === null) {
