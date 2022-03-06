@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,57 +55,123 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="27.02128"
-       y="29.601952"
+       x="16.8883"
+       y="23.409576"
        id="text4558"><tspan
          sodipodi:role="line"
          id="tspan4556"
-         x="27.02128"
-         y="29.601952"
+         x="16.8883"
+         y="23.409576"
          style="stroke-width:0.26458332px">OntoAgent</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="52.849003"
-       y="70.148247"
+       x="42.15308"
+       y="53.259949"
        id="text4558-3"><tspan
          sodipodi:role="line"
          id="tspan4556-6"
-         x="52.849003"
-         y="70.148247"
+         x="42.15308"
+         y="53.259949"
          style="stroke-width:0.26458332px">Knowledge</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="52.621296"
-       y="86.022278"
+       x="41.925373"
+       y="65.193375"
        id="text4558-3-7"><tspan
          sodipodi:role="line"
          id="tspan4556-6-5"
-         x="52.621296"
-         y="86.022278"
+         x="41.925373"
+         y="65.193375"
          style="stroke-width:0.26458332px">Loop</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="52.6213"
-       y="52.245686"
+       x="42.488319"
+       y="39.860935"
        id="text4558-3-3"><tspan
          sodipodi:role="line"
          id="tspan4556-6-56"
-         x="52.6213"
-         y="52.245686"
+         x="42.488319"
+         y="39.860935"
          style="stroke-width:0.26458332px">Process input</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="52.191193"
-       y="102.34763"
+       x="41.49527"
+       y="78.141068"
        id="text4558-3-3-2"><tspan
          sodipodi:role="line"
          id="tspan4556-6-56-9"
-         x="52.191193"
-         y="102.34763"
+         x="41.49527"
+         y="78.141068"
          style="stroke-width:0.26458332px">Generate Output</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="14.005918"
+       y="119.68726"
+       id="text4558-36"><tspan
+         sodipodi:role="line"
+         id="tspan4556-7"
+         x="14.005918"
+         y="119.68726"
+         style="stroke-width:0.26458332px">Chat</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="21.792257"
+       y="137.81306"
+       id="text4558-3-3-5"><tspan
+         sodipodi:role="line"
+         id="tspan4556-6-56-3"
+         x="21.792257"
+         y="137.81306"
+         style="stroke-width:0.26458332px">Generate TMR questions</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="21.53544"
+       y="168.71429"
+       id="text4558-3-3-5-5"><tspan
+         sodipodi:role="line"
+         id="tspan4556-6-56-3-6"
+         x="21.53544"
+         y="168.71429"
+         style="stroke-width:0.26458332px">Match with TMR pattern</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="21.53544"
+       y="183.3508"
+       id="text4558-3-3-5-2"><tspan
+         sodipodi:role="line"
+         id="tspan4556-6-56-3-9"
+         x="21.53544"
+         y="183.3508"
+         style="stroke-width:0.26458332px">Choose TMR answer</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="21.901701"
+       y="151.3237"
+       id="text4558-3-3-5-1"><tspan
+         sodipodi:role="line"
+         id="tspan4556-6-56-3-2"
+         x="21.901701"
+         y="151.3237"
+         style="stroke-width:0.26458332px">Generate human questions</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.69999981px;line-height:5.99999987%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="21.386522"
+       y="198.04799"
+       id="text4558-3-3-5-1-7"><tspan
+         sodipodi:role="line"
+         id="tspan4556-6-56-3-2-0"
+         x="21.386522"
+         y="198.04799"
+         style="stroke-width:0.26458332px">Generate human answer</tspan></text>
   </g>
 </svg>

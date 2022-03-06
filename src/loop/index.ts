@@ -38,8 +38,9 @@ export class Loop {
         this.dbAdd(id, "pattern/instance", 1)
         const concept_id = this.dbAdd(null, "concept", 1)
         this.dbAdd(id, "pattern.instance/concept", concept_id)
-        this.dbAdd(id, "concept/name", "INGEST")
-        this.dbAdd(id, "concept/agent", "*")
+        this.dbAdd(concept_id, "concept/name", "INGEST")
+        this.dbAdd(concept_id, "concept/agent", "*")
+        this.dbAdd(concept_id, "concept/theme", "*")
     }
 
     // BOILERPLATED

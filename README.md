@@ -38,3 +38,65 @@ matic capabilities.
 Factual Vs. Structural definitions
 
 Looks like Datascript is the way to go!
+
+
+## Semantic structure (and patterns)
+
+The issue with this is that is not typed
+- Is OBSEQUIOUS a concept?
+- Does THEME expect a concept or value?
+
+Also semantic structure is more code than data
+
+```
+"REQUEST-ACTION": {
+    "FORMALITY": "OBSEQUIOUS",
+    "AGENT": {"VALUE": "^$VAR1"},
+    "THEME": {"VALUE": "^$VAR7", "BENEFICIARY": {"VALUE": "^$VAR8"}},
+}
+```
+
+Solution: using expression evaluation: https://ericsmekens.github.io/jsep/
+
+```
+ra = new Concept("REQUEST-ACTION")
+ra.formality.set("OBSEQUIOUS")
+ra.property("AGENT").set(lexeme("VAR1").concept)
+ra.property("THEME").set(lexeme("VAR7").concept)
+ra.property("THEME").property("BENEFICIARY").set(lexeme("VAR8").concept)
+```
+
+Should concept properties be predefined (part of the scheme)? - Most probably not
+
+### Patters
+
+**Something ingesting something**
+```
+ingest = new Instance("INGEST")
+ingest.property("AGENT").set("*")
+ingest.property("THEME").set("*")
+```
+
+**Something brown ingesting something**
+```
+ingest = new Instance("INGEST")
+ingest.property("AGENT").set("*")
+ingest.property("AGENT").property("COLOR").set("BROWN")
+ingest.property("THEME").set("*")
+```
+
+**Something ingesting a nut**
+```
+ingest = new Instance("INGEST")
+ingest.property("AGENT").set("*")
+nut = new Instance("NUT-FOODSTUFF")
+ingest.property("THEME").set(nut)
+```
+
+**Event where a squirrel is the agent**
+```
+event = new Instance("EVENT", true) // EVENT or child
+squirrel = new Instance("SQUIRREL")
+event.property("AGENT").set(squirrel)
+event.property("THEME").set("*")
+```
