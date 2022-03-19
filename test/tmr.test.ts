@@ -54,9 +54,9 @@ test("Adding instances with instance property", () => {
         [1,"tmr/id", 1],
         [1,"tmr/instance",2],
         [2,"tmr.instance/id","INGEST-1"],
-        [2,"semantic-structure.concept.property/property",3],
-        [3,"semantic-structure.concept.property/name","AGENT"],
-        [3,"semantic-structure.concept.property/value","SQUIRREL-1"],
+        [2,"tmr.instance.property/property",3],
+        [3,"tmr.instance.property/name","AGENT"],
+        [3,"tmr.instance.property/value","SQUIRREL-1"],
 
     ]
 
@@ -72,9 +72,9 @@ test("Adding instances with concept property", () => {
         [1, "tmr/id", 1],
         [1,"tmr/instance",2],
         [2,"tmr.instance/id","INGEST-1"],
-        [2,"semantic-structure.concept.property/property",3],
-        [3,"semantic-structure.concept.property/name","CONCEPT"],
-        [3,"semantic-structure.concept.property/value","INGEST"],
+        [2,"tmr.instance.property/property",3],
+        [3,"tmr.instance.property/name","CONCEPT"],
+        [3,"tmr.instance.property/value","INGEST"],
 
     ]
 

@@ -34,109 +34,6 @@ export var schema = {
         ":db/cardinality": ":db.cardinality/many"
     },
 
-    // Lexeme
-    "lexeme": {
-        //":db/valueType": ":db.type/string",
-        ":db/unique": ":db.unique/identity"
-    },
-
-    // Lexical sense
-    "sense/lexeme": {
-        ":db/valueType": ":db.type/ref", // lexeme/string
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "sense/category": {
-        //":db/valueType": ":db.type/string", // category
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "sense/syntactic-structure": {
-        ":db/valueType": ":db.type/ref", // syntactic-structure/id
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "sense/semantic-structure": {
-        ":db/valueType": ":db.type/ref", // concept
-        ":db/cardinality": ":db.cardinality/one"
-    },
-
-    // Syntactic Structure
-    "syntactic-structure/id": {
-        //":db/valueType": ":db.type/ref", // lexeme/string   . Or UUID?
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "syntactic-structure/root": {
-        ":db/valueType": ":db.type/ref", // pointer
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "syntactic-structure/category": {
-        //":db/valueType": ":db.type/string", // category
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "syntactic-structure/type": {
-        //":db/valueType": ":db.type/string", // type
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "syntactic-structure/root-word": {
-        ":db/valueType": ":db.type/ref", // lexeme or lexical-sense
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "syntactic-structure/tense": {
-        //":db/valueType": ":db.type/string", // tense
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "syntactic-structure/number": {
-        //":db/valueType": ":db.type/string", // number (singular, plural)
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "syntactic-structure/optional": {
-        //":db/valueType": ":db.type/boolean", // optional
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "syntactic-structure/next": {
-        ":db/valueType": ":db.type/ref", // syntactic-structure
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "syntactic-structure/object": {
-        ":db/valueType": ":db.type/ref", // syntactic-structure
-        ":db/cardinality": ":db.cardinality/many"
-    },
-
-
-    // Semantic Structure
-    "semantic-structure/id": {
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "semantic-structure/concept": {
-        ":db/valueType": ":db.type/ref", // semantic-structure concept to match
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "semantic-structure.concept/name": {
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "semantic-structure.concept/property": {
-        ":db/valueType": ":db.type/ref", // semantic-structure concept property to match
-        ":db/cardinality": ":db.cardinality/many"
-    },
-    "semantic-structure.concept.property/name": {
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "semantic-structure.concept.property/value": {
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "semantic-structure.concept.property/property": {
-        ":db/valueType": ":db.type/ref", // semantic-structure concept property property to match
-        ":db/cardinality": ":db.cardinality/many"
-    },
-
-
-    // Variable
-    "variable/name": {
-        ":db/cardinality": ":db.cardinality/one"
-    },
-    "variable/sense.ref": {
-        ":db/valueType": ":db.type/ref", // lexical-sense
-        ":db/cardinality": ":db.cardinality/one"
-    },
-
     // Tmr
     "tmr/id": {
         ":db/cardinality": ":db.cardinality/one"
@@ -155,4 +52,16 @@ export var schema = {
     "tmr.instance/id": {
         ":db/cardinality": ":db.cardinality/one"
     },
+
+    // Tmr Property
+    "tmr.instance.property/property": {
+        ":db/valueType": ":db.type/ref", // semantic-structure concept property to match
+        ":db/cardinality": ":db.cardinality/many"
+    },
+    "tmr.instance.property/name": {
+        ":db/cardinality": ":db.cardinality/one"
+    },
+    "tmr.instance.property/value": {
+        ":db/cardinality": ":db.cardinality/one"
+    }
 }
