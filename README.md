@@ -100,3 +100,11 @@ squirrel = new Instance("SQUIRREL")
 event.property("AGENT").set(squirrel)
 event.property("THEME").set("*")
 ```
+
+## Dogfooding
+
+Use OpenOntoAgent to parse partially anotated natural language sentence into TMRs, knowledge and rules
+
+## Lexicon
+
+Remove lexicon, in favor of rules to directly generate text from TMR
