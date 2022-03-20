@@ -1,0 +1,42 @@
+- instance: &learn_concept
+    concept: LEARN_CONCEPT
+    theme: *concept
+
+- instance: &concept
+    concept: CONCEPT
+    name: INGEST
+
+- instance: &has
+    concept: OWNERSHIP
+    agent: *concept
+    theme: *set1
+
+- instance: &set1
+    concept: SET
+    participants:
+        - *slot1
+        - *slot2
+        - *slot3
+
+- instance: &slot1
+    concept: SLOT
+    name: THEME
+    value:
+        SEM: [ FOOD, BEVERAGE, INDESTIBLE-MEDICATION ]
+        RELAXABLE-TO: [ ANIMAL, PLANT ]
+        NOT: HUMAN
+
+- instance: &slot2
+    concept: SLOT
+    name: AGENT
+    value:
+        SEM: ANIMAL
+        RELAXABLE-TO: SOCIAL-OBJECT
+
+- instance: &slot3
+    concept: SLOT
+    name: IS-A
+    value:
+        SEM: EVENT
+
+---

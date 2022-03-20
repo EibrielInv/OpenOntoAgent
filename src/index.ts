@@ -1,9 +1,9 @@
 import {Ontoagent} from "./knowledge"
-//import {Ontogen} from "./ontogen"
+import {Ontogen} from "./ontogen"
 //import {Loop} from "./loop"
 
 export {
     Ontoagent,
-    //Ontogen,
+    Ontogen,
     //Loop
 }
