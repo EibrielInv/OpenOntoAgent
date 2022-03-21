@@ -1,5 +1,12 @@
 import {Ontoagent} from "../src/index"
 
+import fs from 'fs'
+import YAML from 'yaml'
+
+
+const file = fs.readFileSync('src/resources/knowledge.yaml', 'utf8')
+console.log(YAML.parse(file))
+
 const tmr = {
     "TMR": {
         "INGEST-1": {},

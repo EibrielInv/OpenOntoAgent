@@ -13,6 +13,8 @@ This project will still use TMR, and a knowledge graph, but not a Lexicon (no sy
 
 The work of the Lexicon will be offloaded to the Knowledge base (semantic structure) and the realization engine (syntactic structure).
 
+To emphatize the importance of the TokenMenu all the information will be feed into the system as TMRs.
+
 [Datascript](https://github.com/tonsky/datascript/) will be used to store and manipulate the data.
 
 
