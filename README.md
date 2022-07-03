@@ -1,3 +1,6 @@
+# Deprecated repo!
+Research continues in https://github.com/Eibriel/CompiAgent
+
 # OpenOntoAgent
 Experimental and simplified OntoAgent architecture. Released as Open Source code.
 0
